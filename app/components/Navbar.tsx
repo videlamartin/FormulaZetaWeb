@@ -1,114 +1,92 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Menu, X, ChevronRight } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-sm border-b border-gray-800">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between p-4">
-        <Link href="/" className="text-2xl font-display text-primary">
-          FormulaZeta
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-black/80 backdrop-blur-md border-b border-white/10 py-3 shadow-2xl"
+          : "bg-gradient-to-b from-black/80 to-transparent py-5"
+      }`}
+    >
+      <nav className="max-w-7xl mx-auto flex items-center justify-between px-6">
+        <Link href="/" className="group flex items-center gap-2">
+          <div className="w-8 h-8 bg-primary rounded-tr-xl rounded-bl-xl flex items-center justify-center transform -skew-x-12 group-hover:scale-110 transition-transform">
+            <span className="font-display font-bold text-white text-lg">FZ</span>
+          </div>
+          <span className="text-xl font-display font-bold tracking-widest text-white group-hover:text-primary transition-colors">
+            FormulaZeta
+          </span>
         </Link>
-        <ul className="hidden md:flex space-x-6 text-sm text-lightGray">
-          <li>
-            <Link href="/" className="hover:text-primary transition-colors">
-              Inicio
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" className="hover:text-primary transition-colors">
-              Nosotros
-            </Link>
-          </li>
-          <li>
-            <Link href="/videos" className="hover:text-primary transition-colors">
-              Videos
-            </Link>
-          </li>
-          <li>
-            <Link href="/calendar" className="hover:text-primary transition-colors">
-              Calendario
-            </Link>
-          </li>
-          <li>
-            <Link href="/news" className="hover:text-primary transition-colors">
-              Noticias
-            </Link>
-          </li>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+          {["Inicio", "Sobre Mí", "Videos", "Calendario", "Noticias"].map((item) => (
+            <li key={item}>
+              <Link
+                href={`#${item.toLowerCase().replace(" ", "-")}`}
+                className="text-gray-300 hover:text-white relative group py-2"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+              </Link>
+            </li>
+          ))}
         </ul>
+
+        {/* Action Button */}
+        <div className="hidden md:block">
+          <Link
+            href="#videos"
+            className="flex items-center gap-1 bg-white/10 hover:bg-primary text-white px-5 py-2 rounded-full backdrop-blur-sm border border-white/10 hover:border-primary transition-all text-sm font-bold"
+          >
+            Último Video <ChevronRight size={16} />
+          </Link>
+        </div>
+
         {/* Mobile menu button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-lightGray hover:text-primary transition-colors"
-          aria-label="Abrir menú"
+          className="md:hidden text-white hover:text-primary transition-colors"
+          aria-label="Toggle menu"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </nav>
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden bg-black/90">
-          <ul className="flex flex-col space-y-2 p-4 text-lightGray text-sm">
-            <li>
+
+      {/* Mobile Menu Dropdown */}
+      <div
+        className={`md:hidden absolute w-full bg-black/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 overflow-hidden ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col px-6 py-4 space-y-4 text-center text-lg font-medium">
+          {["Inicio", "Sobre Mí", "Videos", "Calendario", "Noticias"].map((item) => (
+            <li key={item}>
               <Link
-                href="/"
+                href={`#${item.toLowerCase().replace(" ", "-")}`}
                 onClick={() => setIsOpen(false)}
-                className="block hover:text-primary transition-colors"
+                className="block text-gray-300 hover:text-primary transition-colors py-2"
               >
-                Inicio
+                {item}
               </Link>
             </li>
-            <li>
-              <Link
-                href="/about"
-                onClick={() => setIsOpen(false)}
-                className="block hover:text-primary transition-colors"
-              >
-                Nosotros
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/videos"
-                onClick={() => setIsOpen(false)}
-                className="block hover:text-primary transition-colors"
-              >
-                Videos
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/calendar"
-                onClick={() => setIsOpen(false)}
-                className="block hover:text-primary transition-colors"
-              >
-                Calendario
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/news"
-                onClick={() => setIsOpen(false)}
-                className="block hover:text-primary transition-colors"
-              >
-                Noticias
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
+          ))}
+        </ul>
+      </div>
     </header>
   );
 }
