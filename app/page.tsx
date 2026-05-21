@@ -1,4 +1,5 @@
-// app/page.tsx
+"use client";
+
 import Image from "next/image";
 import { supabase } from "./lib/supabase";
 import { useEffect, useState } from "react";
@@ -16,28 +17,46 @@ export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    // Fetch latest posts from Supabase (placeholder if none)
-    supabase
-      .from("posts")
-      .select("*")
-      .order("published_at", { ascending: false })
-      .limit(3)
-      .then(({ data }) => {
-        if (data) setPosts(data as Post[]);
-      })
-      .catch(() => {
-        // fallback placeholder data
+    async function fetchPosts() {
+      try {
+        const { data, error } = await supabase
+          .from("posts")
+          .select("*")
+          .order("published_at", { ascending: false })
+          .limit(3);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setPosts(data as Post[]);
+        } else {
+          setPosts([
+            {
+              id: 1,
+              title: "Video de Prueba 1",
+              excerpt: "Los mejores momentos de la F1",
+              youtube_id: "dQw4w9WgXcQ",
+              thumbnail: "https://via.placeholder.com/400x225",
+              published_at: new Date().toISOString(),
+            },
+          ]);
+        }
+      } catch (err) {
+        // Datos de prueba en caso de error
         setPosts([
           {
             id: 1,
-            title: "Placeholder Video 1",
-            excerpt: "Exciting F1 highlights",
+            title: "Video de Prueba 1",
+            excerpt: "Los mejores momentos de la F1",
             youtube_id: "dQw4w9WgXcQ",
             thumbnail: "https://via.placeholder.com/400x225",
             published_at: new Date().toISOString(),
           },
         ]);
-      });
+      }
+    }
+    
+    fetchPosts();
   }, []);
 
   return (
@@ -51,22 +70,22 @@ export default function HomePage() {
         }}
       >
         <div className="bg-black/60 p-8 rounded-lg backdrop-blur-sm">
-          <h1 className="text-display text-primary glow-red">FormulaZeta</h1>
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-primary animate-glow">FormulaZeta</h1>
           <p className="mt-4 text-xl text-lightGray">
-            Premium F1 content hub – speed, adrenaline, technology.
+            Centro de contenido premium de F1 – velocidad, adrenalina, tecnología.
           </p>
           <a
             href="#videos"
             className="inline-block mt-6 px-6 py-3 bg-primary text-white rounded-full hover:bg-accent transition"
           >
-            Watch Latest Video
+            Ver Último Video
           </a>
         </div>
       </section>
 
       {/* Latest Videos */}
       <section id="videos" className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-display text-primary mb-8">Latest Videos</h2>
+        <h2 className="text-3xl font-display text-primary mb-8">Últimos Videos</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
             <div key={post.id} className="bg-darkBG rounded-lg overflow-hidden shadow-lg">
@@ -86,9 +105,9 @@ export default function HomePage() {
       </section>
 
       {/* Calendar placeholder */}
-      <section id="calendar" className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-display text-primary mb-8">F1 Calendar</h2>
-        <p className="text-lightGray">[Static calendar will be added soon]</p>
+      <section id="calendar" className="max-w-7xl mx-auto px-4 pb-16">
+        <h2 className="text-3xl font-display text-primary mb-8">Calendario de F1</h2>
+        <p className="text-lightGray">[El calendario estático se agregará pronto]</p>
       </section>
     </main>
   );
