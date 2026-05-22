@@ -207,7 +207,7 @@ export default function HomePage() {
               <h2 className="text-sm font-bold text-accent uppercase tracking-widest mb-2">Sobre mí</h2>
               <h3 className="text-4xl md:text-5xl font-display font-bold mb-6">Detrás de FormulaZeta</h3>
               <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                Soy Martin Zalazar, conductor de FormulaZeta. Estudio Comunicación Audiovisual y AMO la Fórmula 1. Me gusta analizar cada curva, cada mejora aerodinámica y cada estrategia para que vivas la F1 como si estuvieras en el muro de boxes.
+                Soy Zeta Zalazar, conductor de FormulaZeta. Estudio Comunicación Audiovisual y AMO la Fórmula 1. Me gusta analizar cada curva, cada mejora aerodinámica y cada estrategia para que vivas la F1 como si estuvieras en el muro de boxes.
               </p>
               <p className="text-gray-400 text-lg mb-10 leading-relaxed">
                 Las redes me ayudaron mucho a crecer profesionalmente, por eso quiero compartir mis conocimientos y mi pasión con ustedes. <br />¡Un abrazo!</p>
