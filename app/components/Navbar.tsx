@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, ChevronRight } from "lucide-react";
 
 export default function Navbar() {
@@ -23,9 +24,9 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6">
-        <Link href="/" className="group flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-tr-xl rounded-bl-xl flex items-center justify-center transform -skew-x-12 group-hover:scale-110 transition-transform">
-            <span className="font-display font-bold text-white text-lg">FZ</span>
+        <Link href="/" className="group flex items-center gap-3">
+          <div className="relative w-10 h-10 group-hover:scale-110 transition-transform">
+            <Image src="/images/logo.png" alt="FormulaZeta Logo" fill className="object-contain drop-shadow-[0_0_10px_rgba(255,0,0,0.3)]" />
           </div>
           <span className="text-xl font-display font-bold tracking-widest text-white group-hover:text-primary transition-colors">
             FormulaZeta
@@ -34,14 +35,20 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
-          {["Inicio", "Sobre Mí", "Videos", "Calendario", "Noticias"].map((item) => (
-            <li key={item}>
+          {[
+            { name: "Inicio", id: "inicio" },
+            { name: "Sobre Mí", id: "sobre-mi" },
+            { name: "Videos", id: "videos" },
+            { name: "Calendario", id: "calendario" },
+            { name: "Noticias", id: "noticias" },
+          ].map((item) => (
+            <li key={item.name}>
               <Link
-                href={`#${item.toLowerCase().replace(" ", "-")}`}
-                className="text-gray-300 hover:text-white relative group py-2"
+                href={`#${item.id}`}
+                className="text-gray-300 hover:text-primary transition-colors duration-300 relative group py-2"
               >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+                {item.name}
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </li>
           ))}
@@ -74,14 +81,20 @@ export default function Navbar() {
         }`}
       >
         <ul className="flex flex-col px-6 py-4 space-y-4 text-center text-lg font-medium">
-          {["Inicio", "Sobre Mí", "Videos", "Calendario", "Noticias"].map((item) => (
-            <li key={item}>
+          {[
+            { name: "Inicio", id: "inicio" },
+            { name: "Sobre Mí", id: "sobre-mi" },
+            { name: "Videos", id: "videos" },
+            { name: "Calendario", id: "calendario" },
+            { name: "Noticias", id: "noticias" },
+          ].map((item) => (
+            <li key={item.name}>
               <Link
-                href={`#${item.toLowerCase().replace(" ", "-")}`}
+                href={`#${item.id}`}
                 onClick={() => setIsOpen(false)}
                 className="block text-gray-300 hover:text-primary transition-colors py-2"
               >
-                {item}
+                {item.name}
               </Link>
             </li>
           ))}
