@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 // Reemplazamos 'UC' por 'UU' para obtener el ID de la lista de reproducción de subidas (Uploads)
 const UPLOADS_PLAYLIST_ID = "UUjBSltnahL1em-O7KCEfFUQ";
 
 export async function GET() {
+  const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+
   if (!YOUTUBE_API_KEY) {
     // Si no hay clave API, devolvemos datos falsos (dummy) para que la UI no se rompa
     return NextResponse.json({
