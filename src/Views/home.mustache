@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!-- src/Views/home.mustache -->
+<html lang="es" class="h-full bg-darkBG text-lightGray">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{site_title}}</title>
+  <meta name="description" content="{{site_description}}">
+  <link rel="icon" href="images/logo.png" type="image/png">
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ff0000',
+            accent: '#0066ff',
+            darkBG: '#0a0a0a',
+            lightGray: '#e5e5e5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles for Animations & Keyframes -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Orbitron:wght@600;900&display=swap');
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+      }
+      100% {
+        text-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 50px rgba(0, 102, 255, 0.4);
+      }
+    }
+
+    @keyframes scrollPulse {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(15px); opacity: 0; }
+    }
+
+    @keyframes pulseRed {
+      0%, 100% { background-color: rgba(255, 0, 0, 1); }
+      50% { background-color: rgba(150, 0, 0, 1); }
+    }
+
+    .animate-glow {
+      animation: glow 3s infinite alternate ease-in-out;
+    }
+
+    .animate-scrollPulse {
+      animation: scrollPulse 1.5s infinite;
+    }
+
+    .animate-pulseRed {
+      animation: pulseRed 1.5s infinite;
+    }
+
+    /* Estilos globales */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050505;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff0000;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #cc0000;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans">
+
+  {{> navbar }}
+
+  <main class="flex-1 bg-[#050505] text-white selection:bg-primary selection:text-white relative">
+    
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative h-screen flex items-center justify-center overflow-hidden pt-20 bg-[#050505]">
+      <!-- Background Image & Overlay -->
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1551846365-b2c70b9bd6c4?auto=format&fit=crop&w=1920&q=80"
+          alt="F1 Background"
+          class="w-full h-full object-cover opacity-20"
+        />
+        <div class="absolute inset-0 opacity-20 mix-blend-screen bg-repeat" style="background-image: url('images/telemetry-bg.png')"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505] opacity-90"></div>
+        <!-- Glowing Orbs -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[120px] pointer-events-none"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        <div class="inline-block mb-4 px-4 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+          <span class="text-primary font-bold text-sm tracking-widest uppercase">Creador de contenido</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-black uppercase tracking-tighter mb-6">
+          <span class="block text-white drop-shadow-2xl">Página oficial</span>
+          <span class="block text-white animate-glow">Fórmula Zeta</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-300 mb-10 tracking-wide font-light">
+          Análisis, telemetría, noticias y la mejor cobertura de la Formula 1, directo al grano.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a id="hero-cta-btn" href="{{social.youtube}}" target="_blank" rel="noreferrer" class="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-full transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,0,0,0.4)] group hover:animate-pulseRed">
+            <i data-lucide="play" class="w-5 h-5 fill-current group-hover:scale-125 transition-transform duration-300"></i> Ver Último Video
+          </a>
+          <a href="#sobre-mi" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-gray-600 hover:border-white hover:bg-white/5 text-white font-bold rounded-full transition-all flex items-center justify-center gap-2">
+            Conocer Más
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <span class="text-xs text-gray-500 uppercase tracking-widest mb-2 font-bold">Scroll</span>
+        <div class="w-[2px] h-12 bg-white/10 overflow-hidden relative rounded-full">
+          <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent via-primary to-transparent animate-scrollPulse"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LATEST VIDEOS SECTION -->
+    <section id="videos" class="py-24 bg-darkBG relative border-t border-white/5">
+      <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-2">Contenido Exclusivo</h2>
+            <h3 class="text-4xl md:text-5xl font-display font-bold">Últimos Videos</h3>
+          </div>
+          <a href="{{social.youtube}}" target="_blank" rel="noreferrer" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group">
+            Ir al canal <i data-lucide="chevron-right" class="w-[18px] h-[18px] group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+
+        <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Carga AJAX dinámica -->
+          <div class="col-span-full text-center text-gray-500 py-12 flex flex-col items-center gap-4">
+            <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            Cargando videos de YouTube...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT & SOCIAL HUB -->
+    <section id="sobre-mi" class="py-24 bg-black relative">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <!-- Image / Branding -->
+          <div class="relative">
+            <div class="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 blur-2xl rounded-full opacity-50"></div>
+            <div class="relative aspect-square md:aspect-video lg:aspect-square rounded-3xl overflow-hidden border border-white/10">
+              <img src="images/comunidad.jpg" alt="FormulaZeta Comunidad" class="w-full h-full object-cover transition-all duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+              <div class="absolute bottom-6 left-6 right-6">
+                <div class="bg-black/60 backdrop-blur-md p-6 rounded-2xl border border-white/10">
+                  <h3 class="font-display text-2xl font-bold mb-2">Comunidad Zeta</h3>
+                  <p class="text-gray-300 text-sm">Apasionados compartiendo la locura por el automovilismo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text & Socials -->
+          <div>
+            <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-2">Sobre mí</h2>
+            <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">Detrás de FormulaZeta</h3>
+            <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+              Soy Zeta Zalazar, conductor de FormulaZeta. Estudio Comunicación Audiovisual y AMO la Fórmula 1. Me gusta analizar cada curva, cada mejora aerodinámica y cada estrategia para que vivas la F1 como si estuvieras en el muro de boxes.
+            </p>
+            <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+              Las redes me ayudaron mucho a crecer profesionalmente, por eso quiero compartir mis conocimientos y mi pasión con ustedes. <br />¡Un abrazo!</p>
+
+            <!-- Social Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <a href="{{social.youtube}}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center p-6 bg-white/5 hover:bg-[#FF0000]/20 rounded-2xl border border-white/5 hover:border-[#FF0000] transition-all group">
+                <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-[#FF0000] transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
+                <span class="font-bold text-sm">YouTube</span>
+                <span class="text-xs text-gray-500 mt-1">Canal Oficial</span>
+              </a>
+              <a href="{{social.twitter}}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center p-6 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 hover:border-white transition-all group">
+                <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                <span class="font-bold text-sm">X (Twitter)</span>
+                <span class="text-xs text-gray-500 mt-1">Personal</span>
+              </a>
+              <a href="{{social.instagram}}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center p-6 bg-white/5 hover:bg-[#E1306C]/20 rounded-2xl border border-white/5 hover:border-[#E1306C] transition-all group">
+                <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-[#E1306C] transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
+                <span class="font-bold text-sm">Instagram</span>
+                <span class="text-xs text-gray-500 mt-1">Oficial</span>
+              </a>
+              <a href="{{social.kick}}" target="_blank" rel="noreferrer" class="flex flex-col items-center justify-center p-6 bg-white/5 hover:bg-[#53FC18]/20 rounded-2xl border border-white/5 hover:border-[#53FC18] transition-all group">
+                <svg class="w-8 h-8 mb-3 text-gray-400 group-hover:text-[#53FC18] transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M1.333 1.333v21.334h9.334v-2.667h-6.667V4h6.667V1.333H1.333zm12 0v2.667h2.667v2.667h2.667v2.667h2.667V12h-2.667v2.667h-2.667v2.667h-2.667v2.667h-2.667v2.667h12V1.333h-12z" /></svg>
+                <span class="font-bold text-sm">Kick</span>
+                <span class="text-xs text-gray-500 mt-1">Streams</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMUNIDAD SECTION -->
+    <section id="comunidad" class="py-24 bg-darkBG relative border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-2">Únete al Paddock</h2>
+          <h3 class="text-4xl md:text-5xl font-display font-bold">Comunidad FormulaZeta</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- YouTube Members -->
+          <div class="bg-black border border-white/10 rounded-3xl p-8 hover:border-[#FF0000]/50 transition-all group relative overflow-hidden flex flex-col">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-[#FF0000]/10 rounded-bl-full -z-10 group-hover:bg-[#FF0000]/20 transition-colors"></div>
+            <h4 class="text-2xl font-bold mb-4 flex items-center gap-2">
+              <span class="text-[#FF0000]">Socios</span> de YouTube
+            </h4>
+            <p class="text-gray-300 mb-6 text-sm leading-relaxed">
+              La mejor manera de apoyar mi trabajo es sumándote a la comunidad de MIEMBROS del canal en YouTube. Sé parte y accede a:
+            </p>
+            <ul class="space-y-3 mb-8 text-sm text-gray-400 flex-1">
+              <li class="flex items-start gap-2">
+                <span class="text-[#FF0000] mt-1">●</span> Reacciones en vivo durante prácticas libres, clasificaciones, sprints y F2.
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[#FF0000] mt-1">●</span> Videos y análisis exclusivos.
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[#FF0000] mt-1">●</span> Transmisiones SOLO SOCIOS en YouTube y más.
+              </li>
+            </ul>
+            <p class="text-sm text-gray-400 mb-8 italic">
+              Los tres niveles de socio acceden a los mismos beneficios. ¡Con sumarte ya alcanza!
+            </p>
+            <a href="{{social.youtube_join}}" target="_blank" rel="noreferrer" class="inline-block w-full text-center py-4 bg-[#FF0000] hover:bg-red-700 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(255,0,0,0.3)]">
+              Unirme Ahora
+            </a>
+          </div>
+
+          <!-- Discord -->
+          <div class="bg-black border border-white/10 rounded-3xl p-8 hover:border-[#5865F2]/50 transition-all group relative overflow-hidden flex flex-col">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-[#5865F2]/10 rounded-bl-full -z-10 group-hover:bg-[#5865F2]/20 transition-colors"></div>
+            <h4 class="text-2xl font-bold mb-4 flex items-center gap-2">
+              <span class="text-[#5865F2]">Discord</span> Oficial
+            </h4>
+            <div class="text-gray-300 mb-6 text-sm leading-relaxed space-y-4 flex-1">
+              <p>¿Viste un meme muy divertido sobre la carrera?</p>
+              <p>¿Armaste un compilado increíble de adelantos de Colapinto?</p>
+              <p>¿Queres pasarle a Zeta un reel que viste sobre Ferrari?</p>
+              <p class="font-bold text-white">Podes hacerlo en el canal de Discord OFICIAL de Formula Zeta.</p>
+              <p>Además charlá con la comunidad, recibí alertas del F1 Fantasy y sugerí ideas para próximos videos.</p>
+            </div>
+            <a href="{{social.discord}}" target="_blank" rel="noreferrer" class="inline-block w-full text-center py-4 bg-[#5865F2] hover:bg-[#4752C4] text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(88,101,242,0.3)] mt-auto">
+              Ingresar al Servidor
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDAR SECTION -->
+    <section id="calendario" class="py-24 bg-black border-t border-white/5 relative">
+      <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent blur-3xl pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+          <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-2">Próximos Eventos</h2>
+          <h3 class="text-4xl md:text-5xl font-display font-bold">Calendario F1 2026</h3>
+        </div>
+
+        <div id="calendar-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Carga AJAX dinámica -->
+          <div class="col-span-full text-center text-gray-500 py-12 flex flex-col items-center gap-4">
+            <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            Cargando próximos eventos...
+          </div>
+        </div>
+
+        <div class="mt-12 text-center">
+          <a href="#calendario" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors uppercase tracking-widest text-sm font-bold">
+            Volver Arriba <i data-lucide="chevron-right" class="-rotate-90 w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS SECTION -->
+    <section id="noticias" class="py-24 bg-black relative border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-2">Paddock Insider</h2>
+            <h3 class="text-4xl md:text-5xl font-display font-bold flex items-center gap-4">
+              Últimas Noticias <i data-lucide="newspaper" class="text-gray-600 hidden md:block w-10 h-10"></i>
+            </h3>
+          </div>
+          <a href="https://es.motorsport.com/f1/news/" target="_blank" rel="noreferrer" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group">
+            Ir a Motorsport.com <i data-lucide="chevron-right" class="w-[18px] h-[18px] group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+
+        <div id="news-container" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Carga AJAX dinámica -->
+          <div class="col-span-full text-center text-gray-500 py-12 flex flex-col items-center gap-4">
+            <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            Cargando noticias desde el paddock...
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FANTASY SECTION -->
+    <section id="fantasy" class="py-24 bg-darkBG relative border-t border-white/5 overflow-hidden">
+      <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#E10600]/10 to-transparent blur-3xl pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-2">F1 Fantasy</h2>
+            <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">El Gran DT de la Fórmula 1</h3>
+            <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+              Tenés <strong>100 M</strong> para armar un equipo con 5 pilotos y 2 constructores. Jugar es <span className="font-bold text-white bg-primary/20 px-2 py-0.5 rounded">COMPLETAMENTE GRATUITO</span>. No hay apuestas, no hay ningún beneficio pago ni posibilidad de comprar nada.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h4 class="font-bold text-[#53FC18] flex items-center gap-2 mb-4">
+                  <i data-lucide="arrow-up-right" class="w-5 h-5"></i> Sumás puntos si...
+                </h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                  <li class="flex items-start gap-2"><span class="text-[#53FC18] mt-1">•</span> Obtienen buen resultado en clasificación</li>
+                  <li class="flex items-start gap-2"><span class="text-[#53FC18] mt-1">•</span> Adelantan a otros conductores</li>
+                  <li class="flex items-start gap-2"><span class="text-[#53FC18] mt-1">•</span> Suman podios, victorias o vueltas rápidas</li>
+                </ul>
+              </div>
+
+              <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h4 class="font-bold text-[#FF0000] flex items-center gap-2 mb-4">
+                  <i data-lucide="trophy" class="w-5 h-5"></i> OJO, perdés puntos si...
+                </h4>
+                <ul class="space-y-3 text-sm text-gray-400">
+                  <li class="flex items-start gap-2"><span class="text-[#FF0000] mt-1">•</span> Chocan y no terminan la carrera</li>
+                  <li class="flex items-start gap-2"><span class="text-[#FF0000] mt-1">•</span> Pierden posiciones</li>
+                  <li class="flex items-start gap-2"><span class="text-[#FF0000] mt-1">•</span> Son penalizados por la FIA</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="bg-black/50 border border-primary/30 rounded-2xl p-8 mb-10 text-center relative overflow-hidden shadow-[0_0_30px_rgba(255,0,0,0.15)]">
+              <p class="text-gray-300 mb-2 text-sm uppercase tracking-wider font-bold">Liga Oficial FormulaZeta</p>
+              <div class="text-4xl md:text-5xl font-display font-bold text-white tracking-widest mb-4">{{fantasy.code}}</div>
+              <p class="text-gray-400 text-sm mb-6 max-w-md mx-auto">
+                Las ligas oficiales suelen dar premios INCREÍBLES (ej: viajes todo pago a fábricas). ¡Armá tu equipo y competí contra la comunidad!
+              </p>
+              <a href="{{fantasy.link}}" target="_blank" rel="noreferrer" class="inline-block px-8 py-4 bg-white hover:bg-gray-200 text-black font-bold rounded-full transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+                Crear Mi Equipo
+              </a>
+            </div>
+          </div>
+
+          <!-- Image Placeholder -->
+          <div class="relative aspect-[4/5] lg:aspect-square rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
+            <img src="images/fantasy.jpg" alt="F1 Fantasy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-8">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  {{> footer }}
+
+  <!-- Script de carga AJAX y funcionalidades interactivas -->
+  <script src="public/js/main.js"></script>
+</body>
+</html>
